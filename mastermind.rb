@@ -21,14 +21,11 @@ class Game
     end
 
     def compare_guess(guess)
-        puts "comparing guess: #{guess.join(",")}"
-
         guess.each_with_index do |e, i|
-            if  @@secret_code.include?(e)
+            if  @@secret_code.include?(e) && @@secret_code[i] == e
+                puts "Included and correct location!"
+            elsif @@secret_code.include?(e)
                 puts "Included"
-                if @@secret_code[i] == e
-                    puts "Correct location!"
-                end
             end
         end
 
