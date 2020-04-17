@@ -1,5 +1,6 @@
 class Game
     @@secret_code = []
+    @@rounds = 0
     def initialize
         4.times do
             @@secret_code.push(rand(1..6))
@@ -13,22 +14,26 @@ class Game
         code_guess = gets.chomp.split(",")
         code_guess.map! {|x| x = x.to_i}
         if code_guess.length == 4 && code_guess.all?{ |digit| valid_digits.include?(digit)}
-            compare_guess(code_guess)
+            puts compare_guess(code_guess)
         else
             puts "Please enter a valid unput!"
             self.guess
         end
+        @@rounds += 1
     end
 
+    protected   
+     
     def compare_guess(guess)
+        clues = []
         guess.each_with_index do |e, i|
             if  @@secret_code.include?(e) && @@secret_code[i] == e
-                puts "Included and correct location!"
+                clues.push("$")
             elsif @@secret_code.include?(e)
-                puts "Included"
+                clues.push("*")
             end
         end
-
+        return clues.shuffle!.join(" ")
     end
 end
 
