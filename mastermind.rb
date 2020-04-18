@@ -1,6 +1,8 @@
 class Game
     @@secret_code = []
     @@rounds = 0
+    @@winner = false
+
     def initialize
         4.times do
             @@secret_code.push(rand(1..6))
@@ -22,6 +24,19 @@ class Game
         @@rounds += 1
     end
 
+    def play
+        while @@rounds <= 12 && !@@winner
+            puts @@rounds
+            self.guess
+        end
+
+        if @@winner
+            puts "Congratulations! You win!"
+        else 
+            puts "Sorry, you didn't win this time!"
+        end
+    end
+
     protected   
      
     def compare_guess(guess)
@@ -38,4 +53,4 @@ class Game
 end
 
 game = Game.new
-game.guess
+game.play
