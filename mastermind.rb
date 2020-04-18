@@ -41,12 +41,17 @@ class Game
      
     def compare_guess(guess)
         clues = []
-        guess.each_with_index do |e, i|
-            if  @@secret_code.include?(e) && @@secret_code[i] == e
-                clues.push("$")
-            elsif @@secret_code.include?(e)
-                clues.push("*")
+
+        unless @@secret_code == guess
+            guess.each_with_index do |e, i|
+                if  @@secret_code.include?(e) && @@secret_code[i] == e
+                    clues.push("$")
+                elsif @@secret_code.include?(e)
+                    clues.push("*")
+                end
             end
+        else 
+            @@winner = true
         end
         return clues.shuffle!.join(" ")
     end
