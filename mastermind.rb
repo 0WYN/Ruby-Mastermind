@@ -1,4 +1,4 @@
-class Game
+class Mastermind
     @@secret_code = []
     @@rounds = 0
     @@winner = false
@@ -26,7 +26,6 @@ class Game
 
     def play
         while @@rounds <= 12 && !@@winner
-            puts @@rounds
             self.guess
         end
 
@@ -41,13 +40,21 @@ class Game
      
     def compare_guess(guess)
         clues = []
-
+        code_copy = @@secret_code.dup
+        ##checks whether guess is a winner or how close it is to the code
         unless @@secret_code == guess
             guess.each_with_index do |e, i|
-                if  @@secret_code.include?(e) && @@secret_code[i] == e
+                if  code_copy.include?(e) && code_copy[i] == e
+                    code_copy.delete_at(i)
                     clues.push("$")
+                    next
                 elsif @@secret_code.include?(e)
+                    index_to_delete = code_copy.index(e)
+                    index_to_delete == nil ? next : index_to_delete 
+                    code_copy.delete_at(index_to_delete)
                     clues.push("*")
+                else
+                    next
                 end
             end
         else 
@@ -57,5 +64,5 @@ class Game
     end
 end
 
-game = Game.new
+game = Mastermind.new
 game.play
